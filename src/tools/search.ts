@@ -46,11 +46,12 @@ export function registerSearchTools(client: SensorTowerClient) {
       },
       handler: async (args: any) => {
         const os = validateOsParameter(args.os, ['ios', 'android']);
-        return client.makeRequest(`/v1/${os}/rankings/get_category_rankings`, {
+        const dateValue = validateDateFormat(args.date);
+        return client.makeRequest(`/v1/${os}/category/rankings`, {
           category: args.category,
           chart_type: args.chart_type,
           country: args.country || 'US',
-          date: args.date,
+          date: dateValue,
           limit: args.limit || 100,
         });
       },

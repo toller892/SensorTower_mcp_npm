@@ -20,11 +20,13 @@ export function registerYourMetricsTools(client: SensorTowerClient) {
         required: ['app_ids', 'countries', 'start_date', 'end_date'],
       },
       handler: async (args: any) => {
-        return client.makeRequest('/v1/ios/sales_reports/analytics_metrics', {
+        const startDateValue = validateDateFormat(args.start_date);
+        const endDateValue = validateDateFormat(args.end_date);
+        return client.makeRequest('/v1/sales/reports/analytics', {
           app_ids: args.app_ids,
           countries: args.countries,
-          start_date: validateDateFormat(args.start_date),
-          end_date: validateDateFormat(args.end_date),
+          start_date: startDateValue,
+          end_date: endDateValue,
         });
       },
     },
@@ -44,15 +46,17 @@ export function registerYourMetricsTools(client: SensorTowerClient) {
         required: ['app_ids', 'countries', 'start_date', 'end_date'],
       },
       handler: async (args: any) => {
+        const startDateValue = validateDateFormat(args.start_date);
+        const endDateValue = validateDateFormat(args.end_date);
         const params: any = {
           app_ids: args.app_ids,
           countries: args.countries,
-          start_date: validateDateFormat(args.start_date),
-          end_date: validateDateFormat(args.end_date),
+          start_date: startDateValue,
+          end_date: endDateValue,
         };
         if (args.limit) params.limit = args.limit;
         if (args.offset !== undefined) params.offset = args.offset;
-        return client.makeRequest('/v1/ios/sales_reports/sources_metrics', params);
+        return client.makeRequest('/v1/sales/reports/sources', params);
       },
     },
 
@@ -72,12 +76,15 @@ export function registerYourMetricsTools(client: SensorTowerClient) {
       },
       handler: async (args: any) => {
         const os = validateOsParameter(args.os, ['ios', 'android']);
-        return client.makeRequest(`/v1/${os}/sales_reports`, {
+        const startDateValue = validateDateFormat(args.start_date);
+        const endDateValue = validateDateFormat(args.end_date);
+        return client.makeRequest(`/v1/sales/reports`, {
+          os: os,
           app_ids: args.app_ids,
           countries: args.countries,
           date_granularity: args.date_granularity,
-          start_date: validateDateFormat(args.start_date),
-          end_date: validateDateFormat(args.end_date),
+          start_date: startDateValue,
+          end_date: endDateValue,
         });
       },
     },
@@ -87,6 +94,7 @@ export function registerYourMetricsTools(client: SensorTowerClient) {
       inputSchema: {
         type: 'object',
         properties: {
+          os: { type: 'string', enum: ['ios', 'android'], description: 'Operating system' },
           start_date: { type: 'string', description: 'Start date (YYYY-MM-DD)' },
           end_date: { type: 'string', description: 'End date (YYYY-MM-DD)' },
           date_granularity: { type: 'string', enum: ['daily', 'weekly', 'monthly', 'quarterly'] },
@@ -95,13 +103,16 @@ export function registerYourMetricsTools(client: SensorTowerClient) {
           android_app_ids: { type: 'string', description: 'Comma-separated Android app IDs' },
           countries: { type: 'string', description: 'Comma-separated country codes' },
         },
-        required: ['start_date', 'end_date', 'date_granularity'],
+        required: ['os', 'start_date', 'end_date', 'date_granularity'],
       },
       handler: async (args: any) => {
+        const os = validateOsParameter(args.os, ['ios', 'android']);
+        const startDateValue = validateDateFormat(args.start_date);
+        const endDateValue = validateDateFormat(args.end_date);
         const params: any = {
           date_granularity: args.date_granularity,
-          start_date: validateDateFormat(args.start_date),
-          end_date: validateDateFormat(args.end_date),
+          start_date: startDateValue,
+          end_date: endDateValue,
         };
         if (!args.unified_app_ids && !args.itunes_app_ids && !args.android_app_ids) {
           throw new Error('Provide at least one of unified_app_ids, itunes_app_ids, or android_app_ids');
@@ -110,7 +121,7 @@ export function registerYourMetricsTools(client: SensorTowerClient) {
         if (args.itunes_app_ids) params.itunes_app_ids = args.itunes_app_ids;
         if (args.android_app_ids) params.android_app_ids = args.android_app_ids;
         if (args.countries) params.countries = args.countries;
-        return client.makeRequest('/v1/unified/sales_reports', params);
+        return client.makeRequest(`/v1/${os}/compact_sales_report_estimates`, params);
       },
     },
   };

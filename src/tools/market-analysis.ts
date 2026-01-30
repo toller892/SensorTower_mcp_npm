@@ -29,22 +29,22 @@ export function registerMarketAnalysisTools(client: SensorTowerClient) {
       },
       handler: async (args: any) => {
         const os = validateOsParameter(args.os);
-        validateDateFormat(args.date);
-        if (args.end_date) validateDateFormat(args.end_date);
+        const dateValue = validateDateFormat(args.date);
+        const endDateValue = args.end_date ? validateDateFormat(args.end_date) : undefined;
         const params: any = {
           comparison_attribute: args.comparison_attribute,
           time_range: args.time_range,
           measure: args.measure,
           category: args.category,
-          date: args.date,
+          date: dateValue,
           regions: args.regions,
           limit: args.limit || 25,
           data_model: args.data_model || 'DM_2025_Q2',
         };
         if (args.device_type) params.device_type = args.device_type;
-        if (args.end_date) params.end_date = args.end_date;
+        if (endDateValue) params.end_date = endDateValue;
         if (args.offset) params.offset = args.offset;
-        return client.makeRequest(`/v1/${os}/sales_report_estimates_comparison_attributes`, params);
+        return client.makeRequest(`/v1/${os}/apps/top_and_trending`, params);
       },
     },
 
@@ -69,20 +69,21 @@ export function registerMarketAnalysisTools(client: SensorTowerClient) {
       },
       handler: async (args: any) => {
         const os = validateOsParameter(args.os);
-        validateDateFormat(args.date);
+        const dateValue = validateDateFormat(args.date);
+        const endDateValue = args.end_date ? validateDateFormat(args.end_date) : undefined;
         const params: any = {
           comparison_attribute: args.comparison_attribute,
           time_range: args.time_range,
           measure: args.measure,
           category: args.category,
-          date: args.date,
+          date: dateValue,
           limit: args.limit || 25,
         };
         if (args.country) params.country = args.country;
         if (args.device_type) params.device_type = args.device_type;
-        if (args.end_date) params.end_date = args.end_date;
+        if (endDateValue) params.end_date = endDateValue;
         if (args.offset) params.offset = args.offset;
-        return client.makeRequest(`/v1/${os}/top_and_trending/publishers`, params);
+        return client.makeRequest(`/v1/${os}/publishers/top`, params);
       },
     },
 
@@ -135,12 +136,12 @@ export function registerMarketAnalysisTools(client: SensorTowerClient) {
       },
       handler: async (args: any) => {
         const os = validateOsParameter(args.os);
-        validateDateFormat(args.date);
+        const dateValue = validateDateFormat(args.date);
         const params: any = {
           comparison_attribute: args.comparison_attribute,
           time_range: args.time_range,
           measure: args.measure,
-          date: args.date,
+          date: dateValue,
           regions: args.regions,
           category: args.category || '0',
           limit: args.limit || 25,
@@ -148,7 +149,7 @@ export function registerMarketAnalysisTools(client: SensorTowerClient) {
         };
         if (args.device_type) params.device_type = args.device_type;
         if (args.offset) params.offset = args.offset;
-        return client.makeRequest(`/v1/${os}/top_and_trending/active_users`, params);
+        return client.makeRequest(`/v1/${os}/usage/top_apps`, params);
       },
     },
 
@@ -171,10 +172,10 @@ export function registerMarketAnalysisTools(client: SensorTowerClient) {
       },
       handler: async (args: any) => {
         const os = validateOsParameter(args.os);
-        validateDateFormat(args.date);
-        return client.makeRequest(`/v1/${os}/ad_intel/top_apps`, {
+        const dateValue = validateDateFormat(args.date);
+        return client.makeRequest(`/v1/${os}/ad_intel/top_advertisers`, {
           role: args.role,
-          date: args.date,
+          date: dateValue,
           period: args.period,
           category: args.category,
           country: args.country,
@@ -203,11 +204,11 @@ export function registerMarketAnalysisTools(client: SensorTowerClient) {
       },
       handler: async (args: any) => {
         const os = validateOsParameter(args.os);
-        validateDateFormat(args.date);
-        return client.makeRequest(`/v1/${os}/ad_intel/top_apps/search`, {
+        const dateValue = validateDateFormat(args.date);
+        return client.makeRequest(`/v1/${os}/ad_intel/network_analysis/rank`, {
           app_id: args.app_id,
           role: args.role,
-          date: args.date,
+          date: dateValue,
           period: args.period,
           category: args.category,
           country: args.country,
@@ -239,9 +240,9 @@ export function registerMarketAnalysisTools(client: SensorTowerClient) {
       },
       handler: async (args: any) => {
         const os = validateOsParameter(args.os);
-        validateDateFormat(args.date);
+        const dateValue = validateDateFormat(args.date);
         const params: any = {
-          date: args.date,
+          date: dateValue,
           period: args.period,
           category: args.category,
           country: args.country,
@@ -254,7 +255,7 @@ export function registerMarketAnalysisTools(client: SensorTowerClient) {
         if (args.placements) params.placements = args.placements;
         if (args.video_durations) params.video_durations = args.video_durations;
         if (args.aspect_ratios) params.aspect_ratios = args.aspect_ratios;
-        return client.makeRequest(`/v1/${os}/ad_intel/creatives/top`, params);
+        return client.makeRequest(`/v1/${os}/ad_intel/top_creatives`, params);
       },
     },
 
@@ -274,16 +275,16 @@ export function registerMarketAnalysisTools(client: SensorTowerClient) {
       },
       handler: async (args: any) => {
         const os = validateOsParameter(args.os, ['ios', 'android']);
-        validateDateFormat(args.start_date);
-        validateDateFormat(args.end_date);
+        const startDateValue = validateDateFormat(args.start_date);
+        const endDateValue = validateDateFormat(args.end_date);
         const params: any = {
           categories: args.categories,
-          start_date: args.start_date,
-          end_date: args.end_date,
+          start_date: startDateValue,
+          end_date: endDateValue,
           date_granularity: args.date_granularity || 'daily',
         };
         if (args.countries) params.countries = args.countries;
-        return client.makeRequest(`/v1/${os}/games_breakdown`, params);
+        return client.makeRequest(`/v1/${os}/games/breakdown`, params);
       },
     },
   };
