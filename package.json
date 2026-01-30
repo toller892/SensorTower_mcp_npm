@@ -1,0 +1,56 @@
+{
+  "name": "sensor-tower-mcp-pro",
+  "version": "1.2.12",
+  "description": "Model Context Protocol server for Sensor Tower APIs - Access mobile app intelligence data with dual token support",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "sensor-tower-mcp-pro": "./bin/sensortower-mcp.js"
+  },
+  "scripts": {
+    "build": "node ./node_modules/typescript/bin/tsc",
+    "start": "node dist/index.js",
+    "dev": "node ./node_modules/ts-node/dist/bin.js src/index.ts",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "sensortower",
+    "sensor-tower",
+    "mobile-analytics",
+    "app-intelligence",
+    "app-store",
+    "play-store",
+    "ai",
+    "claude",
+    "cursor",
+    "dual-token",
+    "failover"
+  ],
+  "author": "toller892",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/toller892/SensorTower_mcp_npm"
+  },
+  "homepage": "https://github.com/toller892/SensorTower_mcp_npm",
+  "bugs": {
+    "url": "https://github.com/toller892/SensorTower_mcp_npm/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "dist/",
+    "bin/",
+    "README.md"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}
