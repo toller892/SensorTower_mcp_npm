@@ -7,56 +7,6 @@ import { validateOsParameter, validateDateFormat } from '../utils';
 
 export function registerSearchTools(client: SensorTowerClient) {
   return {
-    search_entities: {
-      description: 'Search for apps and publishers by name or description.',
-      inputSchema: {
-        type: 'object',
-        properties: {
-          os: { type: 'string', enum: ['ios', 'android'], description: 'Operating system' },
-          entity_type: { type: 'string', enum: ['app', 'publisher'], description: 'Entity type to search' },
-          term: { type: 'string', description: 'Search term' },
-          limit: { type: 'number', description: 'Max results (1-100)', default: 10 },
-          country: { type: 'string', description: 'ISO country code', default: 'US' },
-        },
-        required: ['os', 'entity_type', 'term'],
-      },
-      handler: async (args: any) => {
-        const os = validateOsParameter(args.os, ['ios', 'android']);
-        return client.makeRequest(`/v1/${os}/search/${args.entity_type}`, {
-          term: args.term,
-          limit: args.limit || 10,
-          country: args.country || 'US',
-        });
-      },
-    },
-
-    get_category_rankings: {
-      description: 'Get top apps by category.',
-      inputSchema: {
-        type: 'object',
-        properties: {
-          os: { type: 'string', enum: ['ios', 'android'], description: 'Operating system' },
-          category: { type: 'string', description: 'Category ID' },
-          chart_type: { type: 'string', description: 'Chart type (e.g., topfreeapplications)' },
-          country: { type: 'string', description: 'ISO country code', default: 'US' },
-          date: { type: 'string', description: 'Date (YYYY-MM-DD)' },
-          limit: { type: 'number', description: 'Max results', default: 100 },
-        },
-        required: ['os', 'category', 'chart_type', 'date'],
-      },
-      handler: async (args: any) => {
-        const os = validateOsParameter(args.os, ['ios', 'android']);
-        const dateValue = validateDateFormat(args.date);
-        return client.makeRequest(`/v1/${os}/category/rankings`, {
-          category: args.category,
-          chart_type: args.chart_type,
-          country: args.country || 'US',
-          date: dateValue,
-          limit: args.limit || 100,
-        });
-      },
-    },
-
     get_publisher_apps: {
       description: 'Retrieve apps for the specified publisher.',
       inputSchema: {
