@@ -91,37 +91,6 @@ export function registerAppAnalysisTools(client: SensorTowerClient) {
       },
     },
 
-    get_creatives: {
-      description: 'Fetch advertising creatives for apps with Share of Voice and publisher data.',
-      inputSchema: {
-        type: 'object',
-        properties: {
-          os: { type: 'string', enum: ['ios', 'android', 'unified'], description: 'Operating system' },
-          app_ids: { type: 'string', description: 'Comma-separated app IDs' },
-          start_date: { type: 'string', description: 'Start date (YYYY-MM-DD)' },
-          countries: { type: 'string', description: 'Comma-separated country codes' },
-          networks: { type: 'string', description: 'Comma-separated ad networks' },
-          ad_types: { type: 'string', description: 'Comma-separated ad types (video,image,playable)' },
-          end_date: { type: 'string', description: 'End date (YYYY-MM-DD)' },
-        },
-        required: ['os', 'app_ids', 'start_date', 'countries', 'networks', 'ad_types'],
-      },
-      handler: async (args: any) => {
-        const os = validateOsParameter(args.os);
-        validateDateFormat(args.start_date);
-        if (args.end_date) validateDateFormat(args.end_date);
-        const params: any = {
-          app_ids: args.app_ids,
-          start_date: args.start_date,
-          countries: args.countries,
-          networks: normalizeNetworks(args.networks),
-          ad_types: args.ad_types,
-        };
-        if (args.end_date) params.end_date = args.end_date;
-        return client.makeRequest(`/v1/${os}/ad_intel/creatives`, params);
-      },
-    },
-
     top_in_app_purchases: {
       description: 'Retrieve top in-app purchases for the requested app IDs.',
       inputSchema: {
@@ -190,37 +159,6 @@ export function registerAppAnalysisTools(client: SensorTowerClient) {
         return client.makeRequest(`/v1/${os}/apps/version_history`, {
           app_id: args.app_id,
           country: args.country || 'US',
-        });
-      },
-    },
-
-    get_impressions: {
-      description: 'Get advertising impressions data for apps.',
-      inputSchema: {
-        type: 'object',
-        properties: {
-          os: { type: 'string', enum: ['ios', 'android', 'unified'], description: 'Operating system' },
-          app_ids: { type: 'string', description: 'Comma-separated app IDs (max 5)' },
-          start_date: { type: 'string', description: 'Start date (YYYY-MM-DD)' },
-          end_date: { type: 'string', description: 'End date (YYYY-MM-DD)' },
-          countries: { type: 'string', description: 'Comma-separated country codes' },
-          networks: { type: 'string', description: 'Comma-separated ad networks' },
-          date_granularity: { type: 'string', enum: ['daily', 'weekly', 'monthly'], default: 'daily' },
-        },
-        required: ['os', 'app_ids', 'start_date', 'end_date', 'countries', 'networks'],
-      },
-      handler: async (args: any) => {
-        const os = validateOsParameter(args.os);
-        validateDateFormat(args.start_date);
-        validateDateFormat(args.end_date);
-        const periodMap: Record<string, string> = { daily: 'day', weekly: 'week', monthly: 'month' };
-        return client.makeRequest(`/v1/${os}/ad_intel/network_analysis`, {
-          app_ids: args.app_ids,
-          start_date: args.start_date,
-          end_date: args.end_date,
-          period: periodMap[args.date_granularity || 'daily'] || 'day',
-          countries: args.countries,
-          networks: normalizeNetworks(args.networks),
         });
       },
     },
@@ -311,36 +249,6 @@ export function registerAppAnalysisTools(client: SensorTowerClient) {
           app_id: args.app_id,
           country: args.country,
         });
-      },
-    },
-
-    impressions_rank: {
-      description: 'Get advertising impressions rank data for apps.',
-      inputSchema: {
-        type: 'object',
-        properties: {
-          os: { type: 'string', enum: ['ios', 'android', 'unified'], description: 'Operating system' },
-          app_ids: { type: 'string', description: 'Comma-separated app IDs' },
-          start_date: { type: 'string', description: 'Start date (YYYY-MM-DD)' },
-          end_date: { type: 'string', description: 'End date (YYYY-MM-DD)' },
-          countries: { type: 'string', description: 'Comma-separated country codes' },
-          networks: { type: 'string', description: 'Comma-separated ad networks' },
-        },
-        required: ['os', 'app_ids', 'start_date', 'end_date', 'countries'],
-      },
-      handler: async (args: any) => {
-        const os = validateOsParameter(args.os);
-        validateDateFormat(args.start_date);
-        validateDateFormat(args.end_date);
-        const params: any = {
-          app_ids: args.app_ids,
-          start_date: args.start_date,
-          end_date: args.end_date,
-          countries: args.countries,
-          period: 'day',
-        };
-        if (args.networks) params.networks = normalizeNetworks(args.networks);
-        return client.makeRequest(`/v1/${os}/ad_intel/network_analysis/rank`, params);
       },
     },
 
