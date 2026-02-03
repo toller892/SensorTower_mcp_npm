@@ -135,7 +135,7 @@ export function registerUtilityTools() {
           service: 'Sensor Tower MCP Server (npm)',
           transport: 'stdio',
           api_base_url: 'https://api.sensortower.com',
-          tools_available: 43,
+          tools_available: 32,
         };
       },
     },

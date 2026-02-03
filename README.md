@@ -4,7 +4,7 @@ A pure Node.js implementation of the Model Context Protocol server for Sensor To
 
 ## Features
 
-- **28 API Tools** - Optimized coverage of Sensor Tower APIs (official endpoints only)
+- **32 API Tools** - Optimized coverage of Sensor Tower APIs (official endpoints only)
 - **App Intelligence** - Metadata, rankings, downloads, revenue estimates
 - **Search & Discovery** - Find apps and publishers by name or description
 - **Market Analysis** - Category rankings, featured apps, competitor insights
@@ -75,7 +75,7 @@ npx sensor-tower-mcp-pro
 
 Get your API token from [Sensor Tower Account Settings](https://app.sensortower.com/users/edit/api-settings).
 
-## Available Tools (28 Total)
+## Available Tools (32 Total)
 
 ### App Analysis (16 tools)
 | Tool | Description |
@@ -212,7 +212,7 @@ This release aligns the tool collection with official Sensor Tower API documenta
   - TypeScript compilation optimized
   - Better error messages and documentation
 
-**Tool Count:** 43 → 28 tools (official endpoints only)
+**Tool Count:** 43 → 32 tools (official endpoints only)
 
 **Migration Guide:**
 - If you were using removed tools, check the [official Sensor Tower API docs](https://docs.sensortower.com/) for alternative endpoints
