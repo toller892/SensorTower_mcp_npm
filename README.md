@@ -4,7 +4,7 @@ A pure Node.js implementation of the Model Context Protocol server for Sensor To
 
 ## Features
 
-- **43 API Tools** - Complete coverage of Sensor Tower APIs
+- **28 API Tools** - Optimized coverage of Sensor Tower APIs (official endpoints only)
 - **App Intelligence** - Metadata, rankings, downloads, revenue estimates
 - **Search & Discovery** - Find apps and publishers by name or description
 - **Market Analysis** - Category rankings, featured apps, competitor insights
@@ -75,7 +75,7 @@ npx sensor-tower-mcp-pro
 
 Get your API token from [Sensor Tower Account Settings](https://app.sensortower.com/users/edit/api-settings).
 
-## Available Tools (43 Total)
+## Available Tools (28 Total)
 
 ### App Analysis (16 tools)
 | Tool | Description |
@@ -97,44 +97,37 @@ Get your API token from [Sensor Tower Account Settings](https://app.sensortower.
 | `app_analysis_demographics` | Demographic analysis |
 | `app_update_timeline` | App update history |
 
-### Market Analysis (8 tools)
+### Market Analysis (4 tools)
 | Tool | Description |
 |------|-------------|
-| `get_top_and_trending` | Top apps by downloads/revenue |
-| `get_top_publishers` | Top publishers ranking |
-| `get_store_summary` | App store summary statistics |
-| `usage_top_apps` | Top apps by active users |
-| `top_apps` | Share of Voice for advertisers/publishers |
-| `top_apps_search` | Rank of advertiser/publisher |
-| `top_creatives` | Top creatives over time |
-| `games_breakdown` | Game category breakdown |
+| `get_store_summary` | App store summary statistics ⚠️ |
+| `top_apps` | Share of Voice for advertisers/publishers ⚠️ |
+| `top_apps_search` | Rank of advertiser/publisher ⚠️ |
+| `games_breakdown` | Game category breakdown ⚠️ |
 
-### Store Marketing (6 tools)
+> ⚠️ **Note**: These tools use unofficial API endpoints not documented in official Sensor Tower API docs. They currently work but may change without notice.
+
+### Store Marketing (3 tools)
 | Tool | Description |
 |------|-------------|
 | `get_featured_today_stories` | Featured Today stories |
 | `get_featured_apps` | Featured apps on App Store |
 | `get_featured_creatives` | Featured creatives and positions |
-| `get_keywords` | Current keyword rankings |
-| `get_reviews` | App reviews and ratings |
-| `research_keyword` | Keyword research metadata |
 
-### Search & Discovery (5 tools)
+### Search & Discovery (3 tools)
 | Tool | Description |
 |------|-------------|
-| `search_entities` | Search apps and publishers |
-| `get_category_rankings` | Top apps by category |
 | `get_publisher_apps` | Apps by publisher |
 | `get_unified_publisher_apps` | Unified publisher apps |
 | `get_app_ids_by_category` | App IDs by category |
 
-### Your Metrics (4 tools)
+### Your Metrics (2 tools)
 | Tool | Description |
 |------|-------------|
-| `analytics_metrics` | App Store analytics report |
-| `sources_metrics` | Metrics by traffic source |
-| `sales_reports` | Downloads/revenue sales report |
+| `sales_reports` | Downloads/revenue sales report 🔒 |
 | `unified_sales_reports` | Unified sales report |
+
+> 🔒 **Permission Required**: `sales_reports` requires special API authorization. Contact Sensor Tower support if you receive 401 errors.
 
 ### Utilities (4 tools)
 | Tool | Description |
@@ -190,3 +183,45 @@ npm start
 ## License
 
 MIT License
+
+---
+
+## Version History
+
+### v1.3.0 (2026-02-03)
+
+**Major Optimization Release - API Alignment**
+
+This release aligns the tool collection with official Sensor Tower API documentation, removing deprecated endpoints and improving reliability.
+
+**Changes:**
+- ✅ **Removed 11 deprecated tools** that return 404 errors:
+  - `search_entities`, `get_category_rankings` (Search)
+  - `get_top_and_trending`, `get_top_publishers`, `usage_top_apps`, `top_creatives` (Market Analysis)
+  - `get_keywords`, `get_reviews`, `research_keyword` (Store Marketing)
+  - `analytics_metrics`, `sources_metrics` (Your Metrics)
+- ✅ **Fixed parameter issues**:
+  - Made `unified_app_ids` required in `unified_sales_reports`
+  - Clarified `app_id` requirement in `get_featured_creatives`
+- ✅ **Added documentation warnings**:
+  - Permission requirements for `sales_reports`
+  - Server error warnings for `get_store_summary`
+  - Unofficial API warnings for shadow endpoints (`top_apps`, `top_apps_search`, `games_breakdown`)
+- ✅ **Code quality improvements**:
+  - 343 lines of deprecated code removed
+  - TypeScript compilation optimized
+  - Better error messages and documentation
+
+**Tool Count:** 43 → 28 tools (official endpoints only)
+
+**Migration Guide:**
+- If you were using removed tools, check the [official Sensor Tower API docs](https://docs.sensortower.com/) for alternative endpoints
+- Shadow API tools (marked with ⚠️) still work but may change without notice
+
+### v1.2.13 (2026-01-30)
+- Fixed API endpoint paths and date parameter handling
+- Improved error handling
+
+### v1.2.12 (2026-01-30)
+- Initial npm release
+- 43 API tools with multi-token failover support
