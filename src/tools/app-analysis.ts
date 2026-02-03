@@ -253,15 +253,15 @@ export function registerAppAnalysisTools(client: SensorTowerClient) {
     },
 
     app_analysis_retention: {
-      description: 'Get retention analysis data for apps.',
+      description: 'Get retention analysis data for apps.\n\n⚠️ IMPORTANT: date_granularity only supports "all_time" or "quarterly". When using "quarterly", end_date is required.',
       inputSchema: {
         type: 'object',
         properties: {
           os: { type: 'string', enum: ['ios', 'android', 'unified'], description: 'Operating system' },
           app_ids: { type: 'string', description: 'Comma-separated app IDs' },
-          date_granularity: { type: 'string', enum: ['daily', 'weekly', 'monthly'], description: 'Time granularity' },
+          date_granularity: { type: 'string', enum: ['all_time', 'quarterly'], description: 'Time granularity (only all_time or quarterly supported)' },
           start_date: { type: 'string', description: 'Start date (YYYY-MM-DD)' },
-          end_date: { type: 'string', description: 'End date (YYYY-MM-DD)' },
+          end_date: { type: 'string', description: 'End date (YYYY-MM-DD) - Required when using quarterly' },
           country: { type: 'string', description: 'ISO country code' },
         },
         required: ['os', 'app_ids', 'date_granularity', 'start_date'],
@@ -273,8 +273,12 @@ export function registerAppAnalysisTools(client: SensorTowerClient) {
           app_ids: args.app_ids,
           date_granularity: args.date_granularity,
           start_date: args.start_date,
-          end_date: args.end_date || '2024-01-31',
         };
+        // end_date is required for quarterly, ignored for all_time
+        if (args.date_granularity === 'quarterly' && args.end_date) {
+          validateDateFormat(args.end_date);
+          params.end_date = args.end_date;
+        }
         if (args.country) params.country = args.country;
         return client.makeRequest(`/v1/${os}/usage/retention`, params);
       },

@@ -1,6 +1,6 @@
 {
   "name": "sensor-tower-mcp-pro",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Model Context Protocol server for Sensor Tower APIs - Access mobile app intelligence data with dual token support",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
