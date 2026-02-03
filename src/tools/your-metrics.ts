@@ -7,59 +7,6 @@ import { validateOsParameter, validateDateFormat } from '../utils';
 
 export function registerYourMetricsTools(client: SensorTowerClient) {
   return {
-    analytics_metrics: {
-      description: 'Get detailed App Store analytics report for connected apps.',
-      inputSchema: {
-        type: 'object',
-        properties: {
-          app_ids: { type: 'string', description: 'Comma-separated app IDs you manage' },
-          countries: { type: 'string', description: 'Comma-separated iTunes country codes' },
-          start_date: { type: 'string', description: 'Start date (YYYY-MM-DD)' },
-          end_date: { type: 'string', description: 'End date (YYYY-MM-DD)' },
-        },
-        required: ['app_ids', 'countries', 'start_date', 'end_date'],
-      },
-      handler: async (args: any) => {
-        const startDateValue = validateDateFormat(args.start_date);
-        const endDateValue = validateDateFormat(args.end_date);
-        return client.makeRequest('/v1/sales/reports/analytics', {
-          app_ids: args.app_ids,
-          countries: args.countries,
-          start_date: startDateValue,
-          end_date: endDateValue,
-        });
-      },
-    },
-
-    sources_metrics: {
-      description: 'Get App Store metrics by traffic source for connected apps.',
-      inputSchema: {
-        type: 'object',
-        properties: {
-          app_ids: { type: 'string', description: 'Comma-separated app IDs you manage' },
-          countries: { type: 'string', description: 'Comma-separated iTunes country codes' },
-          start_date: { type: 'string', description: 'Start date (YYYY-MM-DD)' },
-          end_date: { type: 'string', description: 'End date (YYYY-MM-DD)' },
-          limit: { type: 'number', description: 'Max reports (1-6000)' },
-          offset: { type: 'number', description: 'Offset for pagination' },
-        },
-        required: ['app_ids', 'countries', 'start_date', 'end_date'],
-      },
-      handler: async (args: any) => {
-        const startDateValue = validateDateFormat(args.start_date);
-        const endDateValue = validateDateFormat(args.end_date);
-        const params: any = {
-          app_ids: args.app_ids,
-          countries: args.countries,
-          start_date: startDateValue,
-          end_date: endDateValue,
-        };
-        if (args.limit) params.limit = args.limit;
-        if (args.offset !== undefined) params.offset = args.offset;
-        return client.makeRequest('/v1/sales/reports/sources', params);
-      },
-    },
-
     sales_reports: {
       description: 'Get downloads and revenue sales report for connected apps.',
       inputSchema: {
