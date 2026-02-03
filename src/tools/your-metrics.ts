@@ -8,7 +8,7 @@ import { validateOsParameter, validateDateFormat } from '../utils';
 export function registerYourMetricsTools(client: SensorTowerClient) {
   return {
     sales_reports: {
-      description: 'Get downloads and revenue sales report for connected apps.',
+      description: 'Get sales reports for connected apps.\n\n⚠️ PERMISSION REQUIRED: This endpoint requires special API authorization. If you receive a 401 Unauthorized error, your API key does not have access to this feature. Contact Sensor Tower support to request access.',
       inputSchema: {
         type: 'object',
         properties: {
@@ -50,7 +50,7 @@ export function registerYourMetricsTools(client: SensorTowerClient) {
           android_app_ids: { type: 'string', description: 'Comma-separated Android app IDs' },
           countries: { type: 'string', description: 'Comma-separated country codes' },
         },
-        required: ['os', 'start_date', 'end_date', 'date_granularity'],
+        required: ['os', 'start_date', 'end_date', 'date_granularity', 'unified_app_ids'],
       },
       handler: async (args: any) => {
         const os = validateOsParameter(args.os, ['ios', 'android']);

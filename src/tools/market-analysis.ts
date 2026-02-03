@@ -8,7 +8,7 @@ import { validateOsParameter, validateDateFormat, normalizeNetworks } from '../u
 export function registerMarketAnalysisTools(client: SensorTowerClient) {
   return {
     get_store_summary: {
-      description: 'Get app store summary statistics.',
+      description: 'Get app store summary statistics.\n\n⚠️ TEMPORARILY DISABLED: This endpoint is currently returning 500 Internal Server Error from Sensor Tower\'s API. This is a server-side issue. Please contact Sensor Tower support or try again later.',
       inputSchema: {
         type: 'object',
         properties: {
@@ -36,7 +36,7 @@ export function registerMarketAnalysisTools(client: SensorTowerClient) {
     },
 
     top_apps: {
-      description: 'Fetch Share of Voice for top advertisers or publishers.',
+      description: 'Fetch Share of Voice for top advertisers or publishers.\n\n⚠️ UNOFFICIAL API: This endpoint is not documented in the official Sensor Tower API documentation. While it currently works, it may be deprecated or changed without notice. Use with caution and consider migrating to official alternatives.',
       inputSchema: {
         type: 'object',
         properties: {
@@ -69,7 +69,7 @@ export function registerMarketAnalysisTools(client: SensorTowerClient) {
     },
 
     top_apps_search: {
-      description: 'Fetch the rank of a top advertiser or publisher for given filters.',
+      description: 'Fetch the rank of a top advertiser or publisher for given filters.\n\n⚠️ UNOFFICIAL API: This endpoint is not documented in the official Sensor Tower API documentation. While it currently works, it may be deprecated or changed without notice. Use with caution and consider migrating to official alternatives.',
       inputSchema: {
         type: 'object',
         properties: {
@@ -100,7 +100,7 @@ export function registerMarketAnalysisTools(client: SensorTowerClient) {
     },
 
     games_breakdown: {
-      description: 'Retrieve aggregated download and revenue estimates of game categories.',
+      description: 'Retrieve aggregated download and revenue estimates of game categories.\n\n⚠️ UNOFFICIAL API: This endpoint is not documented in the official Sensor Tower API documentation. While it currently works, it may be deprecated or changed without notice. Use with caution and consider migrating to official alternatives.',
       inputSchema: {
         type: 'object',
         properties: {

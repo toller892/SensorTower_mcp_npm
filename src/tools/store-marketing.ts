@@ -50,7 +50,7 @@ export function registerStoreMarketingTools(client: SensorTowerClient) {
     },
 
     get_featured_creatives: {
-      description: 'Retrieve featured creatives and their positions over time.',
+      description: 'Retrieve featured creatives and their positions over time.\n\nNote: app_id is required. The API will return 422 if not provided.',
       inputSchema: {
         type: 'object',
         properties: {
