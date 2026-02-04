@@ -16,10 +16,10 @@ A pure Node.js implementation of the Model Context Protocol server for Sensor To
 
 ```bash
 # Run directly with npx (recommended)
-npx sensor-tower-mcp-pro
+npx @feedmob/sensor-tower-mcp-pro
 
 # Or install globally
-npm install -g sensor-tower-mcp-pro
+npm install -g @feedmob/sensor-tower-mcp-pro
 sensor-tower-mcp-pro
 ```
 
@@ -39,7 +39,7 @@ Add to your MCP settings:
   "mcpServers": {
     "sensortower": {
       "command": "npx",
-      "args": ["-y", "sensor-tower-mcp-pro"],
+      "args": ["-y", "@feedmob/sensor-tower-mcp-pro"],
       "env": {
         "SENSOR_TOWER_API_TOKEN": "primary_token",
         "SENSOR_TOWER_API_TOKEN_BACKUP": "backup_token"
@@ -68,7 +68,7 @@ When a token's API quota is exhausted (429/403 error), the server automatically 
 SENSOR_TOWER_API_TOKEN=token1 \
 SENSOR_TOWER_API_TOKEN_BACKUP=token2 \
 SENSOR_TOWER_API_TOKEN_2=token3 \
-npx sensor-tower-mcp-pro
+npx @feedmob/sensor-tower-mcp-pro
 ```
 
 ## API Token
@@ -125,7 +125,7 @@ Get your API token from [Sensor Tower Account Settings](https://app.sensortower.
 ## Command Line Options
 
 ```bash
-npx sensor-tower-mcp-pro [OPTIONS]
+npx @feedmob/sensor-tower-mcp-pro [OPTIONS]
 
 Options:
   --transport <type>    Transport type: stdio (default) or http
@@ -139,10 +139,10 @@ Options:
 
 ```bash
 # Run with stdio transport (for MCP clients)
-SENSOR_TOWER_API_TOKEN=your_token npx sensor-tower-mcp-pro
+SENSOR_TOWER_API_TOKEN=your_token npx @feedmob/sensor-tower-mcp-pro
 
 # Run with HTTP transport
-npx sensor-tower-mcp-pro --transport http --port 8666
+npx @feedmob/sensor-tower-mcp-pro --transport http --port 8666
 ```
 
 ## Development
@@ -163,7 +163,7 @@ npm start
 - [GitHub Repository](https://github.com/toller892/SensorTower_mcp_npm)
 - [Sensor Tower API Docs](https://docs.sensortower.com/)
 - [Model Context Protocol](https://modelcontextprotocol.io/)
-- [npm Package](https://www.npmjs.com/package/sensor-tower-mcp-pro)
+- [npm Package](https://www.npmjs.com/package/@feedmob/sensor-tower-mcp-pro)
 
 ## License
 
